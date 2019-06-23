@@ -3,7 +3,7 @@
 #ifndef FILE_COPY
 #define FILE_COPY
 
-extern char clipboard[256];
+extern char clipboard[1024];
 extern char clipboardFilename[256];
 extern bool clipboardFolder;
 extern bool clipboardOn;

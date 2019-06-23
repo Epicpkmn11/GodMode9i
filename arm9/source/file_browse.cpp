@@ -34,6 +34,7 @@
 #include "date.h"
 #include "screenshot.h"
 #include "fileOperations.h"
+#include "fileViewer.h"
 #include "driveMenu.h"
 #include "driveOperations.h"
 #include "nitrofs.h"
@@ -126,7 +127,7 @@ void getDirectoryContents (vector<DirEntry>& dirContents) {
 	dirEntry.name = "..";	// ".." entry
 	dirEntry.isDirectory = true;
 	dirEntry.isApp = false;
-	dirContents.insert (dirContents.begin(), dirEntry);	// Add ".." to top of list
+	dirContents.insert(dirContents.begin(), dirEntry);	// Add ".." to top of list
 }
 
 void showDirectoryContents (const vector<DirEntry>& dirContents, int fileOffset, int startRow) {
@@ -226,6 +227,11 @@ int fileBrowse_A(DirEntry* entry, char path[PATH_MAX]) {
 		assignedOp[maxCursors] = 2;
 		printf("   Copy to fat:/gm9i/out\n");
 	}
+	{
+		maxCursors++;
+		assignedOp[maxCursors] = 4;
+		printf("   Open in hex editor\n");
+	}
 	printf("\n");
 	printf("(<A> select, <B> cancel)");
 	while (true) {
@@ -295,6 +301,8 @@ int fileBrowse_A(DirEntry* entry, char path[PATH_MAX]) {
 					chdir("nitro:/");
 					nitroSecondaryDrive = secondaryDrive;
 				}
+			} else if (assignedOp[optionOffset] == 4) {
+				openFileText(entry->name);
 			}
 			return assignedOp[optionOffset];
 		}
@@ -596,7 +604,7 @@ string browseForFile (void) {
 						printf ("Deleting file, please wait...");
 						remove(entry->name.c_str());
 					}
-					char filePath[256];
+					char filePath[PATH_MAX];
 					snprintf(filePath, sizeof(filePath), "%s%s", path, entry->name.c_str());
 					if (strcmp(filePath, clipboard) == 0) {
 						clipboardUsed = false;	// Disable clipboard restore
@@ -639,7 +647,7 @@ string browseForFile (void) {
 		// Copy file/folder
 		if (pressed & KEY_Y) {
 			if (clipboardOn) {
-				char destPath[256];
+				char destPath[PATH_MAX+256];
 				snprintf(destPath, sizeof(destPath), "%s%s", path, clipboardFilename);
 				if (strncmp (path, "nitro:/", 7) != 0 && string(clipboard) != string(destPath)) {
 					if (fileBrowse_paste(destPath)) {

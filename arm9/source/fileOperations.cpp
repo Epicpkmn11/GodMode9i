@@ -12,7 +12,7 @@ using namespace std;
 
 u32 copyBuf[copyBufSize];
 
-char clipboard[256];
+char clipboard[PATH_MAX];
 char clipboardFilename[256];
 bool clipboardFolder = false;
 bool clipboardOn = false;
