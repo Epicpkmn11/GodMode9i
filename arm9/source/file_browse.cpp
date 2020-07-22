@@ -29,7 +29,7 @@
 #include <dirent.h>
 
 #include <nds.h>
-#include <fat.h>
+#include <slim.h>
 
 #include "main.h"
 #include "date.h"

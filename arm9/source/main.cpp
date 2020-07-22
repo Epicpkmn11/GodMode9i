@@ -22,7 +22,7 @@
 #include <nds.h>
 #include <nds/arm9/dldi.h>
 #include <stdio.h>
-#include <fat.h>
+#include <slim.h>
 #include <sys/stat.h>
 #include <limits.h>
 
@@ -139,7 +139,7 @@ int main(int argc, char **argv) {
 	
 	bool yHeld = false;
 
-	sprintf(titleName, "GodMode9i v%i.%i.%i", 2, 4, 0);
+	sprintf(titleName, "GodMode9i v%i.%i.%i (libslim)", 2, 4, 0);
 
 	// initialize video mode
 	videoSetMode(MODE_4_2D);

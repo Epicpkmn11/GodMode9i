@@ -50,7 +50,7 @@ LDFLAGS	=	-specs=ds_arm9.specs -g -Wl,--gc-sections $(ARCH) -Wl,-Map,$(notdir $*
 #---------------------------------------------------------------------------------
 # any extra libraries we wish to link with the project (order is important)
 #---------------------------------------------------------------------------------
-LIBS	:= 	-lfat -lnds9
+LIBS	:= 	-lslim -lnds9
  
  
 #---------------------------------------------------------------------------------
@@ -130,7 +130,7 @@ dist:	all
 	
 $(TARGET).nds:	$(TARGET).arm7 $(TARGET).arm9
 	ndstool	-c $(TARGET).nds -7 $(TARGET).arm7.elf -9 $(TARGET).arm9.elf \
-			-b icon.bmp "GodMode9i;RocketRobz" \
+			-b icon.bmp "GodMode9i (libslim);RocketRobz" \
 			-g HGMA 00 "GODMODE9I" -z 80040000 -u 00030004
 	python2 fix_ndsheader.py $(CURDIR)/$(TARGET).nds
 

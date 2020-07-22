@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-#include <fat.h>
+#include <slim.h>
 
 #include "screenshot.h"
 #include "bmp.h"
