@@ -366,6 +366,22 @@ void ndsCardDump(void) {
 		tonccpy(gameCode, ndsCardHeader.gameCode, 6);
 		if (gameTitle[0] == 0 || gameTitle[0] == 0x2E || gameTitle[0] == 0xFF) {
 			sprintf(gameTitle, "NO-TITLE");
+		} else {
+			// Remove invalid characters in FAT32 from the title
+			for(uint i = 0; i < sizeof(gameTitle); i++) {
+				switch(gameTitle[i]) {
+						case '>':
+						case '<':
+						case ':':
+						case '"':
+						case '/':
+						case '\x5C':
+						case '|':
+						case '?':
+						case '*':
+							gameTitle[i] = '_';
+				}
+			}
 		}
 		if (gameCode[0] == 0 || gameCode[0] == 0x23 || gameCode[0] == 0xFF) {
 			sprintf(gameCode, "NONE00");
